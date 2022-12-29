@@ -1,6 +1,8 @@
 # About
-This is repository for my lightweight C++ asynchronous library for embedded Linux devices or Linux services on x86/ARM boxes, based on **libasio** and **zeromq**.
+This is repository for my lightweight C++ asynchronous library for embedded Linux devices or Linux services on x86/ARM/RISC-V boxes, based on **asio** and **zeromq**.
 I hope someone will help to improve this lib.)
+# Credits
+This library is using non-boost version of **asio** from [think-async](https://think-async.com), and **cppzmq** (https://github.com/zeromq/cppzmq).
 
 # Purpose
 Purpose of creating is simple, it's good to have an extremely lightwight library (ideally header only) for different projects related to embedded Linux devices for non critical automatization etc.
