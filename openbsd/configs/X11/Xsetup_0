@@ -1,0 +1,39 @@
+#!/bin/sh
+# $OpenBSD: Xsetup_0.in,v 1.1 2021/08/30 15:38:27 matthieu Exp $
+
+prefix="/usr/X11R6"
+exec_prefix="${prefix}"
+
+
+${exec_prefix}/bin/xrandr --output default --dpi 96
+${exec_prefix}/bin/xset fp+ /usr/local/share/fonts/terminus
+
+xsetroot -solid \#596a79
+${exec_prefix}/bin/xset b off
+
+/usr/local/bin/feh --bg-scale /home/rootbox/Pictures/2560x1600.png
+# sxpm OpenBSD.xpm &
+
+(
+while true; do
+    ${exec_prefix}/bin/xmessage -geometry +800-32 -buttons "[ Sleep ]":20,"[ Restart ]":21,"[ Shutdown ]":22 ""
+    ACTION=$?
+    echo "Xmessage said: $ACTION"
+    if   [ $ACTION -eq 20 ]; then /usr/bin/zzz;
+    elif [ $ACTION -eq 21 ]; then
+	${exec_prefix}/bin/xsetroot -cursor_name watch
+	/sbin/shutdown -r now
+    elif [ $ACTION -eq 22 ]; then
+	${exec_prefix}/bin/xsetroot -cursor_name watch
+	/sbin/shutdown -p now
+    else echo "errrrerrrr!!!!";
+    fi
+    
+    if [ -z "$(pgrep -U root xclock)" ]; then break; fi
+done
+) &
+
+OS_NAME=$(uname -n)
+OS_INFO=$(uname -smr)
+
+${exec_prefix}/bin/xclock -geometry -0+0 -strftime "$OS_NAME ($OS_INFO) | %a. %d %b. %Y  %H:%M " &
